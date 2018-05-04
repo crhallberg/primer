@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import storiesFromMarkdown from '../../.storybook/lib/storiesFromMarkdown'
+import storiesFromMarkdown from '../../tools/stories-from-markdown'
 
 const stories = storiesOf('Subhead', module)
 
