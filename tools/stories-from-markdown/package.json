@@ -1,0 +1,27 @@
+{
+  "name": "stories-from-markdown",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "lint": "eslint index.js test/",
+    "build": "babel index.js -o dist/index.js",
+    "pretest": "npm run build",
+    "test": "mocha",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "html-to-react": "^1.3.3",
+    "octicons": "^7.2.0",
+    "parse-pairs": "^0.2.2",
+    "remark": "^9.0.0",
+    "unist-util-find-before": "^2.0.2",
+    "unist-util-parents": "^1.0.0",
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}

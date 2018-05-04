@@ -1,25 +1,21 @@
-import remark from 'remark'
-import parents from 'unist-util-parents'
-import select from 'unist-util-select'
 import findBefore from 'unist-util-find-before'
 import htmlToReact from 'html-to-react'
+import octicons from 'octicons'
+import parents from 'unist-util-parents'
 import parsePairs from 'parse-pairs'
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import {Octicon} from '../Octicon'
+import remark from 'remark'
+import select from 'unist-util-select'
 
-const htmlParser = new htmlToReact.Parser()
-
-const railsOcticonToReact = (html) => {
-  // <%= octicon "tools" %> to <Octicon name="tools" />
+function railsOcticonToReact (html) {
+  // <%= octicon "tools" %> to <svg class="octicon ...">...</svg>
   const octre = /<%= octicon[\(\s]["']([a-z\-]+)["'][^%]*%>/gi
   html = html.replace(octre, (match, name) => {
-    return ReactDOMServer.renderToStaticMarkup(<Octicon name={name} />)
+    return octicons[name].toSVG()
   })
   return html
 }
 
-const parseBlockAttrs = (node, file) => {
+function parseBlockAttrs(node, file) {
   const pairs = node.lang.replace(/^html\s*/, '')
   const attrs = pairs.length ? parsePairs(pairs) : {}
   attrs.title = attrs.title
@@ -29,37 +25,41 @@ const parseBlockAttrs = (node, file) => {
   return node
 }
 
-const nodeToStory = (node, file) => {
+export function nodeToStory(node, file) {
   const html = railsOcticonToReact(node.value)
+  const parser = new htmlToReact.Parser()
   const {title} = node.block
   return {
     title,
-    story: () => htmlParser.parse(html),
+    story: () => parser.parse(html),
     html,
     file,
     node,
   }
 }
 
-const getPreviousHeading = node => {
+function getPreviousHeading(node) {
   const heading = findBefore(node.parent, node, 'heading')
   return (heading && !heading.used)
     ? (heading.used = true, heading.children.map(c => c.value).join(''))
     : undefined
 }
 
-export default req => {
+export default function storiesFromMarkdown(markdown, options) {
+  const ast = parents(remark.parse(content, options))
+  const path = file.replace(/^\.\//, '')
+  return select(ast, 'code[lang^=html]')
+    .map(parseBlockAttrs)
+    .filter(node => node.block.story !== 'false')
+    .map(node => nodeToStory(node, path))
+}
+
+export function requireContextHelper(req, options) {
   return req.keys()
     .filter(file => !file.match(/node_modules/))
     .reduce((stories, file) => {
       const content = req(file)
-      const ast = parents(remark.parse(content))
-      const path = file.replace(/^\.\//, '')
-      return stories.concat(
-        select(ast, 'code[lang^=html]')
-          .map(parseBlockAttrs)
-          .filter(({block}) => block.story !== "false")
-          .map(node => nodeToStory(node, path))
-      )
+      const fileStories = storiesFromMarkdown(content, options)
+      return stories.concat(fileStories)
     }, [])
 }
