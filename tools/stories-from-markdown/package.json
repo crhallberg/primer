@@ -7,7 +7,7 @@
     "lint": "eslint index.js test/",
     "prebuild": "mkdir -p dist && rm -rf dist/*",
     "build": "babel index.js -o dist/index.js",
-    "test": "ava --verbose test/*.js",
+    "test": "ava --verbose test/*.test.js",
     "prepublishOnly": "npm run build"
   },
   "ava": {
