@@ -1,9 +1,21 @@
 import test from 'ava'
 import {mockRequireContext} from './utils'
-import {requireContextHelper} from '../index'
+import {storiesFromRequireContext, addAllStoriesFromMarkdown} from '../index'
 
-test('requireContextHelper() works as expected', t => {
+test('storiesFromRequireContext() works as expected', t => {
   const req = mockRequireContext(['basic.md'])
-  const stories = requireContextHelper(req)
+  const stories = storiesFromRequireContext(req)
   t.is(stories.length, 2, 'Wrong stories count')
+})
+
+test('addAllStoriesFromMarkdown() works as expected', t => {
+  const added = []
+  const book = {
+    add: (title, story) => {
+      added.push({title, story})
+    }
+  }
+  const req = mockRequireContext(['basic.md'])
+  addAllStoriesFromMarkdown(book, req)
+  t.is(added.length, 2, 'Wrong stories count')
 })

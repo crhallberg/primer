@@ -15,7 +15,7 @@ export default function storiesFromMarkdown(markdown, file = 'stdin', options = 
     .map(node => astNodeToStory(node, path))
 }
 
-export function requireContextHelper(req, options) {
+export function storiesFromRequireContext(req, options) {
   return req.keys()
     .filter(file => !file.match(/node_modules/))
     .reduce((stories, file) => {
@@ -23,6 +23,13 @@ export function requireContextHelper(req, options) {
       const fileStories = storiesFromMarkdown(content, file, options)
       return stories.concat(fileStories)
     }, [])
+}
+
+export function addAllStoriesFromMarkdown(book, context, options) {
+  const stories = storiesFromRequireContext(context, options)
+  for (const {title, story} of stories) {
+    book.add(title, story)
+  }
 }
 
 function astNodeToStory(node, file) {
