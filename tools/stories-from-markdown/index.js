@@ -45,8 +45,8 @@ function getPreviousHeading(node) {
     : undefined
 }
 
-export default function storiesFromMarkdown(markdown, options) {
-  const ast = parents(remark.parse(content, options))
+export default function storiesFromMarkdown(markdown, file = 'stdin', options = {}) {
+  const ast = parents(remark.parse(markdown, options))
   const path = file.replace(/^\.\//, '')
   return select(ast, 'code[lang^=html]')
     .map(parseBlockAttrs)
@@ -59,7 +59,7 @@ export function requireContextHelper(req, options) {
     .filter(file => !file.match(/node_modules/))
     .reduce((stories, file) => {
       const content = req(file)
-      const fileStories = storiesFromMarkdown(content, options)
+      const fileStories = storiesFromMarkdown(content, file, options)
       return stories.concat(fileStories)
     }, [])
 }
