@@ -6,7 +6,39 @@ import parsePairs from 'parse-pairs'
 import remark from 'remark'
 import select from 'unist-util-select'
 
-function railsOcticonToReact (html) {
+export default function storiesFromMarkdown(markdown, file = 'stdin', options = {}) {
+  const ast = parents(remark.parse(markdown, options))
+  const path = file.replace(/^\.\//, '')
+  return select(ast, 'code[lang^=html]')
+    .map(parseBlockAttrs)
+    .filter(node => node.block.story !== 'false')
+    .map(node => astNodeToStory(node, path))
+}
+
+export function requireContextHelper(req, options) {
+  return req.keys()
+    .filter(file => !file.match(/node_modules/))
+    .reduce((stories, file) => {
+      const content = req(file)
+      const fileStories = storiesFromMarkdown(content, file, options)
+      return stories.concat(fileStories)
+    }, [])
+}
+
+function astNodeToStory(node, file) {
+  const html = railsOcticonToReact(node.value)
+  const parser = new htmlToReact.Parser()
+  const {title} = node.block
+  return {
+    title,
+    story: () => parser.parse(html),
+    html,
+    file,
+    node,
+  }
+}
+
+function railsOcticonToReact(html) {
   // <%= octicon "tools" %> to <svg class="octicon ...">...</svg>
   const octre = /<%= octicon[\(\s]["']([a-z\-]+)["'][^%]*%>/gi
   html = html.replace(octre, (match, name) => {
@@ -25,41 +57,9 @@ function parseBlockAttrs(node, file) {
   return node
 }
 
-export function nodeToStory(node, file) {
-  const html = railsOcticonToReact(node.value)
-  const parser = new htmlToReact.Parser()
-  const {title} = node.block
-  return {
-    title,
-    story: () => parser.parse(html),
-    html,
-    file,
-    node,
-  }
-}
-
 function getPreviousHeading(node) {
   const heading = findBefore(node.parent, node, 'heading')
   return (heading && !heading.used)
     ? (heading.used = true, heading.children.map(c => c.value).join(''))
     : undefined
-}
-
-export default function storiesFromMarkdown(markdown, file = 'stdin', options = {}) {
-  const ast = parents(remark.parse(markdown, options))
-  const path = file.replace(/^\.\//, '')
-  return select(ast, 'code[lang^=html]')
-    .map(parseBlockAttrs)
-    .filter(node => node.block.story !== 'false')
-    .map(node => nodeToStory(node, path))
-}
-
-export function requireContextHelper(req, options) {
-  return req.keys()
-    .filter(file => !file.match(/node_modules/))
-    .reduce((stories, file) => {
-      const content = req(file)
-      const fileStories = storiesFromMarkdown(content, file, options)
-      return stories.concat(fileStories)
-    }, [])
 }

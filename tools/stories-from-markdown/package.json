@@ -2,15 +2,17 @@
   "private": true,
   "name": "stories-from-markdown",
   "version": "0.0.1",
-  "main": "dist/index.js",
-  "module": "index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint index.js test/",
     "prebuild": "mkdir -p dist && rm -rf dist/*",
     "build": "babel index.js -o dist/index.js",
-    "pretest": "npm run build",
-    "test": "mocha",
+    "test": "ava --verbose test/*.js",
     "prepublishOnly": "npm run build"
+  },
+  "ava": {
+    "require": ["babel-register"],
+    "babel": "inherit"
   },
   "dependencies": {
     "html-to-react": "^1.3.3",
@@ -22,6 +24,7 @@
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0"
   }
