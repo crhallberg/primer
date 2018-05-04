@@ -4,8 +4,8 @@
   "main": "dist/index.js",
   "module": "index.js",
   "scripts": {
-    "clean": "rm -rf dist/*",
     "lint": "eslint index.js test/",
+    "prebuild": "mkdir -p dist && rm -rf dist/*",
     "build": "babel index.js -o dist/index.js",
     "pretest": "npm run build",
     "test": "mocha",
