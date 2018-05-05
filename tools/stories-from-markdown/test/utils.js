@@ -29,6 +29,12 @@ export function withFixture(name, test) {
     })
 }
 
+export function mockRequire(fixtures) {
+  return {
+    context: () => mockRequireContext(fixtures)
+  }
+}
+
 export function mockRequireContext(fixtures) {
   const req = file => {
     if (cache.has(file)) {

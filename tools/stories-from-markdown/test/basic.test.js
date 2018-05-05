@@ -22,3 +22,10 @@ test('Produces React stories with the correct output', basicTest((t, stories) =>
   t.is(renderToStaticMarkup(stories[0].story()), 'This is just text.')
   t.is(renderToStaticMarkup(stories[1].story()), 'This one has <b>bold</b>.')
 }))
+
+test('De-dupes story titles', withFixture('dedupe.md', (t, {stories}) => {
+  t.is(stories.length, 3, 'Wrong story count')
+  t.is(stories[0].title, 'Foo', 'First story title is wrong')
+  t.is(stories[1].title, 'Foo (2)', 'Second story title is wrong')
+  t.is(stories[2].title, 'Foo bar', 'Third story title is wrong')
+}))
