@@ -1,66 +1,82 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import Octicon from 'octicons-react'
+import {storiesOf} from '@storybook/react'
+import {addAllStoriesFromMarkdown} from '../../tools/stories-from-markdown'
 
-// sub-stories
-import inputGroup from './input-group'
+const stories = storiesOf('Forms', module)
+addAllStoriesFromMarkdown(stories, require.context('.', true, /\.md$/))
 
-storiesOf('Forms', module)
+stories
   .addDecorator(story => (
     <form>
       {story()}
     </form>
   ))
-  .add('form-control', () => (
+  .add('XXX/form-control', () => (
     <input className='form-control' type='text' placeholder='Standard input' aria-label='Standard input'/>
   ))
-  .add('input-block', () => (
+  .add('XXX/input-block', () => (
     <input className='form-control input-block' type='text' placeholder='Block input' aria-label='Block input'/>
   ))
-  .add('input-group', inputGroup)
-  .add('input-lg', () => (
+  .add('XXX/input-group', () => (
+    <div className="input-group">
+      <input
+        className="form-control"
+        type="text"
+        placeholder="Username"
+        aria-label="Username"
+      />
+      <span className="input-group-button">
+        <button className="btn" type="button" aria-label="Copy to clipboard">
+          <Octicon name="clippy" />
+        </button>
+      </span>
+    </div>
+  ))
+  .add('XXX/input-lg', () => (
     <input className='form-control input-lg' type='text' placeholder='Large input' aria-label='Large input'/>
   ))
-  .add('input-sm', () => (
+  .add('XXX/input-sm', () => (
     <input className='form-control input-sm' type='text' placeholder='Small input' aria-label='Small input'/>
   ))
-  .add('input-monospace', () => (
+  .add('XXX/input-monospace', () => (
     <input className='form-control input-monospace' type='text' placeholder='Monospace input' aria-label='SHA'/>
   ))
-  .add('form-select', () => (
+  .add('XXX/form-select', () => (
     <select className='form-select' aria-label='Important decision'>
       <option>Select</option>
       <option value='option 2'>Option 2</option>
     </select>
   ))
-  .add('select-sm', () => (
+  .add('XXX/select-sm', () => (
     <select className='form-select select-sm' aria-label='Important decision'>
       <option>Select</option>
       <option value='option 2'>Option 2</option>
     </select>
   ))
-  .add('radio', () => (
+  .add('XXX/radio', () => (
     <label>
       <input type='radio' id='derp' name='radio'/>
       Radio
     </label>
   ))
-  .add('checkbox', () => (
+  .add('XXX/checkbox', () => (
     <label>
       <input type='checkbox'/>
       checkbox
     </label>
   ))
-  .add('textarea', () => (
+  .add('XXX/textarea', () => (
     <textarea className='form-control'>
     </textarea>
   ))
-  .add('form-actions', () => (
+  .add('XXX/form-actions', () => (
     <div className='form-actions'>
       <button type='submit' className='btn btn-primary'>Save changes</button>
       <button type='button' className='btn'>Cancel</button>
     </div>
   ))
-  .add('label highlight', () => (
+  .add('XXX/label highlight', () => (
     <div className='form-checkbox'>
       <label>
         <input type='checkbox' checked='checked'/>
@@ -68,7 +84,7 @@ storiesOf('Forms', module)
       </label>
     </div>
   ))
-  .add('form-checkbox-details', () => (
+  .add('XXX/form-checkbox-details', () => (
     <div className='form-checkbox'>
       <label aria-live='polite'>
         <input type='radio' className='form-checkbox-details-trigger' name='hireme'/>
@@ -81,7 +97,7 @@ storiesOf('Forms', module)
       </label>
     </div>
   ))
-  .add('form-group', () => (
+  .add('XXX/form-group', () => (
     <div>
       <dl className='form-group'>
         <dt><label for='example-text'>Example Text</label></dt>
@@ -111,7 +127,7 @@ storiesOf('Forms', module)
       </dl>
     </div>
   ))
-  .add('form validation', () => (
+  .add('XXX/form validation', () => (
     <div>
       <dl className='form-group errored'>
         <dt><label for='example-text-errored'>Example Text</label></dt>

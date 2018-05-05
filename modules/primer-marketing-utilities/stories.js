@@ -1,25 +1,29 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import {storiesOf} from '@storybook/react'
+import {addAllStoriesFromMarkdown} from '../../tools/stories-from-markdown'
 
-storiesOf('Marketing utilities', module)
-  .add('Responsive borders', () => (
+const stories = storiesOf('Marketing utilities', module)
+addAllStoriesFromMarkdown(stories, require.context('.', true, /\.md$/))
+
+stories
+  .add('XXX Responsive borders', () => (
     <div className='border-top border-sm-right border-md-bottom border-lg-top-0'>.border-top-0</div>
   ))
-  .add('border-white-fade', () => (
+  .add('XXX border-white-fade', () => (
   <div className='bg-blue text-white p-3'>
     <span className='border border-white-fade p-2'>
       .border-white-fade
     </span>
   </div>
   ))
-  .add('Responsive position', () => (
+  .add('XXX Responsive position', () => (
     <div className='position-relative p-6 bg-gray'>
       <div className='d-inline-block position-md-absolute bottom-0 right-0 border bg-white p-2'>
         .position-md-absolute
       </div>
     </div>
   ))
-  .add('Y directional margin', () => (
+  .add('XXX Y directional margin', () => (
     <div>
       <div className="d-inline-block mr-6">
         <div className="d-inline-block mt-7 bg-blue-light">.mt-7</div>
@@ -32,7 +36,7 @@ storiesOf('Marketing utilities', module)
       </div>
     </div>
   ))
-  .add('Y directional responsive margin', () => (
+  .add('XXX Y directional responsive margin', () => (
     <div>
       <div className="d-inline-block mr-6">
         <div className="d-inline-block mt-sm-7 bg-blue-light">.mt-sm-7</div>
@@ -45,7 +49,7 @@ storiesOf('Marketing utilities', module)
       </div>
     </div>
   ))
-  .add('Y directional padding', () => (
+  .add('XXX Y directional padding', () => (
     <div>
       <div className="d-inline-block mr-6">
         <div className="d-inline-block pt-7 bg-blue-light">.pt-7</div>
@@ -58,7 +62,7 @@ storiesOf('Marketing utilities', module)
       </div>
     </div>
   ))
-  .add('Y directional responsive padding', () => (
+  .add('XXX Y directional responsive padding', () => (
     <div>
       <div className="d-inline-block mr-6">
         <div className="d-inline-block pt-sm-7 bg-blue-light">.pt-sm-7</div>

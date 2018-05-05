@@ -1,10 +1,6 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import storiesFromMarkdown from '../../tools/stories-from-markdown'
+import {storiesOf} from '@storybook/react'
+import {addAllStoriesFromMarkdown} from '../../tools/stories-from-markdown'
 
 const stories = storiesOf('Navigation', module)
-
-storiesFromMarkdown(require.context('.', true, /\.md$/))
-  .forEach(({title, story}) => {
-    stories.add(title, story)
-  })
+addAllStoriesFromMarkdown(stories, require.context('.', true, /\.md$/))

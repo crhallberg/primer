@@ -1,7 +1,6 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import {storiesOf} from '@storybook/react'
+import {addAllStoriesFromMarkdown} from '../../tools/stories-from-markdown'
 
-storiesOf('Base', module)
-  .add('button', () => (
-    <button>Button</button>
-))
+const stories = storiesOf('Base', module)
+addAllStoriesFromMarkdown(stories, require.context('.', true, /\.md$/))

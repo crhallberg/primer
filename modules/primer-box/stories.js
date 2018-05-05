@@ -1,13 +1,17 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import {storiesOf} from '@storybook/react'
+import {addAllStoriesFromMarkdown} from '../../tools/stories-from-markdown'
 
-storiesOf('Box', module)
-  .add('Box', () => (
+const stories = storiesOf('Box', module)
+addAllStoriesFromMarkdown(stories, require.context('.', true, /\.md$/))
+
+stories
+  .add('XXX Box', () => (
     <div className='Box'>
       Box
     </div>
   ))
-  .add('Box elements', () => (
+  .add('XXX Box elements', () => (
     <div className='Box'>
       <div className='Box-header'>
         <h3 className='Box-title'>
@@ -22,7 +26,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box-row', () => (
+  .add('XXX Box-row', () => (
     <div className='Box'>
       <ul>
         <li className='Box-row'>
@@ -40,7 +44,7 @@ storiesOf('Box', module)
       </ul>
     </div>
   ))
-  .add('Box--condensed', () => (
+  .add('XXX Box--condensed', () => (
     <div className='Box Box--condensed'>
       <div className='Box-header'>
         <h3 className='Box-title'>
@@ -63,7 +67,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box--spacious', () => (
+  .add('XXX Box--spacious', () => (
     <div className='Box Box--spacious'>
       <div className='Box-header'>
         <h3 className='Box-title'>
@@ -86,7 +90,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box--blue', () => (
+  .add('XXX Box--blue', () => (
     <div className='Box Box--blue'>
       <div className='Box-header'>
         <h3 className='Box-title'>
@@ -109,7 +113,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box-header--blue', () => (
+  .add('XXX Box-header--blue', () => (
     <div className='Box'>
       <div className='Box-header Box-header--blue'>
         <h3 className='Box-title'>Box-title</h3>
@@ -119,7 +123,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box--danger', () => (
+  .add('XXX Box--danger', () => (
     <div className='Box Box--danger'>
       <div className='Box-row'>
         Row one
@@ -129,7 +133,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box-row themes', () => (
+  .add('XXX Box-row themes', () => (
     <div>
       <div className='Box mb-4'>
         <div className='Box-row Box-row--gray'>
@@ -164,7 +168,7 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box-row--unread', () => (
+  .add('XXX Box-row--unread', () => (
     <div className='Box'>
       <div className='Box-row'>
         Box row
@@ -177,19 +181,19 @@ storiesOf('Box', module)
       </div>
     </div>
   ))
-  .add('Box-row-link', () => (
+  .add('XXX Box-row-link', () => (
     <div className='Box'>
       <div className='Box-row'>
         <a className='Box-row-link' href='#url'>Box row link</a>
       </div>
     </div>
   ))
-  .add('Box border-dashed', () => (
+  .add('XXX Box border-dashed', () => (
     <div className='Box border-dashed p-2'>
       Box border-dashed
     </div>
   ))
-  .add('Box with flash-full', () => (
+  .add('XXX Box with flash-full', () => (
     <div className='Box'>
       <div className='Box-header'>
         Box-header

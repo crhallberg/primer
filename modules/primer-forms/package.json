@@ -38,5 +38,8 @@
     "forms",
     "inputs",
     "select menus"
-  ]
+  ],
+  "devDependencies": {
+    "octicons-react": "^0.1.1"
+  }
 }
