@@ -1,13 +1,12 @@
+import {configure, addDecorator} from '@storybook/react'
+import {setOptions} from '@storybook/addon-options'
+import {version} from '../modules/primer/package.json'
 import React from 'react'
-import { configure, addDecorator } from '@storybook/react'
-import { setOptions } from '@storybook/addon-options'
 import '../modules/primer/index.scss'
-import { version } from '../modules/primer/package.json'
 
 setOptions({
   name: `Primer v${version}`,
   url: 'http://primer.github.io/',
-  showDownPanel: false,
 })
 
 addDecorator(story => (
@@ -17,7 +16,7 @@ addDecorator(story => (
 ))
 
 const contexts = [
-  require.context('../modules', true, /stories.*\.js$/),
+  require.context('../modules', true, /stories(\/index)?\.js$/),
 ]
 
 configure(() => {
