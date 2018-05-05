@@ -9,10 +9,11 @@ import select from 'unist-util-select'
 export default function storiesFromMarkdown(markdown, file = 'stdin', options = {}) {
   const ast = parents(remark.parse(markdown, options))
   const path = file.replace(/^\.\//, '')
-  return select(ast, 'code[lang^=html]')
+  const stories = select(ast, 'code[lang^=html]')
     .map(parseBlockAttrs)
     .filter(node => node.block.story !== 'false')
     .map(node => astNodeToStory(node, path))
+  return stories.length > 1 ? dedupeStoryTitles(stories) : stories
 }
 
 export function storiesFromRequireContext(req, options) {
@@ -43,6 +44,21 @@ function astNodeToStory(node, file) {
     file,
     node,
   }
+}
+
+function dedupeStoryTitles(stories) {
+  const used = new Map()
+  for (const story of stories) {
+    const {title} = story
+    if (used.has(title)) {
+      const index = used.get(title) + 1
+      story.title = `${title} (${index})`
+      used.set(title, index)
+    } else {
+      used.set(title, 1)
+    }
+  }
+  return stories
 }
 
 function railsOcticonToReact(html) {
